@@ -21,3 +21,10 @@
     * Customer Service
     * Employee Access
         - Repair Status
+        - Assignments
+        - Org Structure (From Database/dynamic)
+        - View Transactions / Search
+        - View Customers / Search
+        - Delete Customers / Employees (Depending on login)
+        - Edit employees (Depending on login)
+    
