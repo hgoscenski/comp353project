@@ -4,8 +4,6 @@ Fruity Co. computer company needs to be completely redone! The entire company ha
 This is a huge endeavor and will require several systems to be working pretty closer together in order to properly implement the major functionalities of their previous system.
 We will be implementing the backend database and structure as well as several webinterfaces to interact with the humans who work for Fruity Co. and Fruity Co.'s customers.
 
-
-
 ## Database Design-
 
 ### These is a tentative list of tables that will be involved in our database design
@@ -36,5 +34,7 @@ We will be implementing the backend database and structure as well as several we
         - Delete Customers / Employees (Depending on login)
         - Edit employees (Depending on login)
         - Order supplies (Employees)
+
+## Features to Implement
         
     
