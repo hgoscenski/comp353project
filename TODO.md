@@ -18,4 +18,5 @@
     * Shipping = Country, Carrier
     * PurchaseInfo = userID, creditCardNum, ExpiryDate, SecurityCode
     * RequestedRepairs = userID, productID, transID, date/time, issueDesc
+    * NewDB1
 
