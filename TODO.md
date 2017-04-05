@@ -33,9 +33,9 @@
     * UserID (FK)
     * Date
 * OrderLine
-    * OrderLineID
-    * OrderID 
-    * Product 
+    * OrderLineID (PK)
+    * OrderID (FK)
+    * ProductID (FK)
     * Quantity
 * Requested Repairs
     * RequestID (PK)
