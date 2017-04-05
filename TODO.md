@@ -7,7 +7,7 @@
                     --> Transaction
                     --> Repair Ticket
 * Insert/DDL
-* Database Preliminary
+* Database Preliminary Do Not Use
     * Product = ProductID, Product Desc, ProductPic, Price, QuantityAval, AtCost
     * Login = UserID, SaltedPassword, isEmp
     * Transactions = TransID, Product, Total, Time, UserID
