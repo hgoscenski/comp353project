@@ -64,6 +64,8 @@
 * Users
     * UserID (PK)
     * PayId (FK)
+    * FName
+    * LName
     * ShipStreetAddress
     * ShipCity
     * ShipState
