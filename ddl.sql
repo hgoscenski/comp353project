@@ -75,7 +75,7 @@ create index LoginUser_user_UserID_fk
 	on loginuser (UserID)
 ;
 
-create table `order`
+create table fruityco.`order`
 (
 	OrderID int not null auto_increment
 		primary key,
@@ -88,11 +88,11 @@ create table `order`
 ;
 
 create index order_payment_PayID_fk
-	on `order` (PayID)
+	on fruityco.`order` (PayID)
 ;
 
 create index order_user_UserID_fk
-	on `order` (UserID)
+	on fruityco.`order` (UserID)
 ;
 
 create table orderline
@@ -135,7 +135,7 @@ create table payment
 )
 ;
 
-alter table order
+alter table fruityco.`order`
 	add constraint order_payment_PayID_fk
 foreign key (PayID) references payment (PayID)
 ;
@@ -218,7 +218,7 @@ alter table loginuser
 foreign key (UserID) references user (UserID)
 ;
 
-alter table order
+alter table fruityco.'order'
 	add constraint order_user_UserID_fk
 foreign key (UserID) references user (UserID)
 ;
