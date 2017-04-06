@@ -1,0 +1,1 @@
+INSERT INTO fruityco.payment (PayID, BillingName, BillingStreetAddress, BillingCity, BillingState, BillingZipCode, BillingCountry, CreditCardNum, CreditCardExpiryDate, CreditCardSecurityCode) VALUES (1, 'Evan Brennan', '1381 W. Western', 'Chicago', 'IL', 60202, 'USA', '2245987574832957', '04/21', '392');

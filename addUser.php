@@ -44,6 +44,7 @@ if (isset($_GET['fname'])) {
         <?php $emailSQL = $GLOBALS['pdo']->prepare('SELECT UserID FROM fruityco.user WHERE EmailAddress = :email');
             $emailSQL->bindValue(':email', $emailHoldingItem);
             $emailSQL->execute();
+
             $result = $emailSQL->fetch();
             $userid = $result['UserID'];
             ?>
@@ -53,7 +54,7 @@ if (isset($_GET['fname'])) {
             <div>
                 <label for="password">Password<input type="password" name="password" id="password"</label>
                 <input type="hidden" name="email" value="<?php echo $emailHoldingItem;?>">
-                <input type="hidden" name="userid" value="<?= userid;?>">
+                <input type="hidden" name="userid" value="<?= $userid;?>">
             </div>
         </form>
 

@@ -1,0 +1,4 @@
+INSERT INTO fruityco.employee (DepartmentID, Fname, Lname, Compensation, DOB, SSN, EmployeeStatus, SupID) VALUES (1, 'John', 'Doe', 45000, '1990-09-07', '123456789', 'ACT', null);
+INSERT INTO fruityco.employee (DepartmentID, Fname, Lname, Compensation, DOB, SSN, EmployeeStatus, SupID) VALUES (1, 'Jane', 'Smith', 30000, '1985-01-01', '987654321', 'ACT', 5005);
+INSERT INTO fruityco.employee (DepartmentID, Fname, Lname, Compensation, DOB, SSN, EmployeeStatus, SupID) VALUES (1, 'Adam', 'Johnson', 35000, '1988-02-29', '123654756', 'TRM', 5005);
+INSERT INTO fruityco.employee (DepartmentID, Fname, Lname, Compensation, DOB, SSN, EmployeeStatus, SupID) VALUES (2, 'Jacob', 'Maxson', 40000, '1980-03-30', '324435322', 'ACT', 5005);

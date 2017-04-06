@@ -1,0 +1,2 @@
+INSERT INTO fruityco.user (PayID, ShipStreetAddress, ShipCity, ShipState, ShipZipCode, ShipCountry, PhoneNumber, EmailAddress, fName, LName) VALUES (null, '1381 W. Western', 'Chicago', 'IL', 60202, 'USA', '2698675309', 'e.brennan@gmail.com', 'Evan', 'Brennan');
+INSERT INTO fruityco.user (PayID, ShipStreetAddress, ShipCity, ShipState, ShipZipCode, ShipCountry, PhoneNumber, EmailAddress, fName, LName) VALUES (null, '1738 E. Michigan', 'Chicago', 'IL', 60203, 'USA', '3122694365', 'mallany.k@gmail.com', 'Kathy', 'Mallany');

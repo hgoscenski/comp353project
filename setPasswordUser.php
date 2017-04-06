@@ -9,12 +9,11 @@ include_once 'db.inc.php';
 if(isset($_GET['password'])){
     try{
         echo $_GET['userid'];
+
         $sql = 'INSERT INTO loginuser SET 
             EmailAddress = :email,
             SaltedPassword = :password,
             UserID = :userid';
-
-        echo
 
         $s = $GLOBALS['pdo']->prepare($sql);
 

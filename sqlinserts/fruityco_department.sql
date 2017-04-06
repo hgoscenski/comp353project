@@ -1,0 +1,2 @@
+INSERT INTO fruityco.department (Location, DepartmentDesc, ManagerID) VALUES ('Chicago', 'Administration', 5005);
+INSERT INTO fruityco.department (Location, DepartmentDesc, ManagerID) VALUES ('Kalamzaoo', 'Production', 5020);
