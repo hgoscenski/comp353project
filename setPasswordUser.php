@@ -14,11 +14,13 @@ if(isset($_GET['password'])){
             SaltedPassword = :password,
             UserID = :userid';
 
+        echo
+
         $s = $GLOBALS['pdo']->prepare($sql);
 
         $s->bindValue(':email', $_GET['email']);
-        $s->bindValue('password', password_hash($_GET['password'], PASSWORD_DEFAULT));
-        $s->bindValue('userid', $_GET['userid']);
+        $s->bindValue(':password', password_hash($_GET['password'], PASSWORD_DEFAULT));
+        $s->bindValue(':userid', $_GET['userid']);
 
         $s->execute();
 

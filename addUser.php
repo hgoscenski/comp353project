@@ -24,6 +24,7 @@ if (isset($_GET['fname'])) {
         EmailAddress = :email';
 
         $s = $GLOBALS['pdo']->prepare($sql);
+
         $emailHoldingItem = $_GET['email'];
 
         $s->bindValue(':fname', $_GET['fname']);
@@ -36,8 +37,6 @@ if (isset($_GET['fname'])) {
         $s->bindValue(':phone', $_GET['phone']);
         $s->bindValue(':email', $emailHoldingItem);
         $s->execute();
-
-        echo "This worked.";
         ?>
 
         <h2>Thank you for registering! Please set your password:</h2>
@@ -45,16 +44,16 @@ if (isset($_GET['fname'])) {
         <?php $emailSQL = $GLOBALS['pdo']->prepare('SELECT UserID FROM fruityco.user WHERE EmailAddress = :email');
             $emailSQL->bindValue(':email', $emailHoldingItem);
             $emailSQL->execute();
-            $result = $emailSQL->get_result();
-            echo $result;
+            $result = $emailSQL->fetch();
+            $userid = $result['UserID'];
             ?>
 
 
         <form action="setPasswordUser.php" method="get">
             <div>
                 <label for="password">Password<input type="password" name="password" id="password"</label>
-                <input type="hidden" name="email" value="<?php echo $_GET['email']?>">
-                <input type="hidden" name="userid" value="">
+                <input type="hidden" name="email" value="<?php echo $emailHoldingItem;?>">
+                <input type="hidden" name="userid" value="<?= userid;?>">
             </div>
         </form>
 
