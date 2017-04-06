@@ -6,7 +6,7 @@ create table department
 	DepartmentDesc varchar(20) not null,
 	ManagerID int not null,
 	constraint Department_DepartmentID_uindex
-		unique (DepartmentID)
+	unique (DepartmentID)
 )
 ;
 
@@ -27,11 +27,11 @@ create table employee
 	EmployeeStatus varchar(3) not null,
 	SupID int null,
 	constraint Employee_EmployeeID_uindex
-		unique (EmployeeID),
+	unique (EmployeeID),
 	constraint employee_department_DepartmentID_fk
-		foreign key (DepartmentID) references department (DepartmentID),
+	foreign key (DepartmentID) references department (DepartmentID),
 	constraint employee__EmployeeID_fk
-		foreign key (SupID) references employee (EmployeeID)
+	foreign key (SupID) references employee (EmployeeID)
 )
 ;
 
@@ -45,7 +45,7 @@ create index employee__EmployeeID_fk
 
 alter table department
 	add constraint department_employee_EmployeeID_fk
-		foreign key (ManagerID) references employee (EmployeeID)
+foreign key (ManagerID) references employee (EmployeeID)
 ;
 
 create table loginemployee
@@ -54,7 +54,7 @@ create table loginemployee
 		primary key,
 	SaltedPassword int null,
 	constraint loginemployee_employee_EmployeeID_fk
-		foreign key (EmployeeID) references employee (EmployeeID)
+	foreign key (EmployeeID) references employee (EmployeeID)
 )
 ;
 
@@ -65,9 +65,9 @@ create table loginuser
 	SaltedPassword varchar(100) not null,
 	UserID int not null,
 	constraint LoginUser_EmailAddress_uindex
-		unique (EmailAddress),
+	unique (EmailAddress),
 	constraint LoginUser_SaltedPassword_uindex
-		unique (SaltedPassword)
+	unique (SaltedPassword)
 )
 ;
 
@@ -83,7 +83,7 @@ create table `order`
 	UserID int not null,
 	Date date not null,
 	constraint Order_OrderID_uindex
-		unique (OrderID)
+	unique (OrderID)
 )
 ;
 
@@ -103,9 +103,9 @@ create table orderline
 	OrderID int not null,
 	Quantity int not null,
 	constraint OrderLine_OrderLineId_uindex
-		unique (OrderLineId),
+	unique (OrderLineId),
 	constraint OrderID_fk
-		foreign key (OrderID) references order (OrderID)
+	foreign key (OrderID) references order (OrderID)
 )
 ;
 
@@ -131,13 +131,13 @@ create table payment
 	CreditCardExpiryDate varchar(5) not null,
 	CreditCardSecurityCode varchar(3) not null,
 	constraint Payment_PayID_uindex
-		unique (PayID)
+	unique (PayID)
 )
 ;
 
 alter table order
 	add constraint order_payment_PayID_fk
-		foreign key (PayID) references payment (PayID)
+foreign key (PayID) references payment (PayID)
 ;
 
 create table product
@@ -150,13 +150,13 @@ create table product
 	QuantityAval int not null,
 	AtCost float not null,
 	constraint Product_ProductID_uindex
-		unique (ProductID)
+	unique (ProductID)
 )
 ;
 
 alter table orderline
 	add constraint ProductID_fk
-		foreign key (ProductID) references product (ProductID)
+foreign key (ProductID) references product (ProductID)
 ;
 
 create table requestedrepairs
@@ -168,11 +168,11 @@ create table requestedrepairs
 	OrderID int not null,
 	RequestDate date not null,
 	constraint RequestedRepairs_RequestID_uindex
-		unique (RequestID),
+	unique (RequestID),
 	constraint requestedrepairs_product_ProductID_fk
-		foreign key (ProductID) references product (ProductID),
+	foreign key (ProductID) references product (ProductID),
 	constraint requestedrepairs_order_OrderID_fk
-		foreign key (OrderID) references order (OrderID)
+	foreign key (OrderID) references order (OrderID)
 )
 ;
 
@@ -200,10 +200,12 @@ create table user
 	ShipCountry varchar(15) null,
 	PhoneNumber varchar(10) null,
 	EmailAddress varchar(50) not null,
+	fName varchar(15) null,
+	LName varchar(15) null,
 	constraint User_UserID_uindex
-		unique (UserID),
+	unique (UserID),
 	constraint user_payment_PayID_fk
-		foreign key (PayID) references payment (PayID)
+	foreign key (PayID) references payment (PayID)
 )
 ;
 
@@ -213,16 +215,16 @@ create index user_payment_PayID_fk
 
 alter table loginuser
 	add constraint LoginUser_user_UserID_fk
-		foreign key (UserID) references user (UserID)
+foreign key (UserID) references user (UserID)
 ;
 
 alter table order
 	add constraint order_user_UserID_fk
-		foreign key (UserID) references user (UserID)
+foreign key (UserID) references user (UserID)
 ;
 
 alter table requestedrepairs
 	add constraint requestedrepairs_user_UserID_fk
-		foreign key (UserID) references user (UserID)
+foreign key (UserID) references user (UserID)
 ;
 
