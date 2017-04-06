@@ -26,6 +26,7 @@ catch(PDOException $e)
 <h3>As we are exclusive and handcraft all of our products we do restrict orders to a maximum of 1 per month per customer</h3>
 <table>
     <tr>
+        <th>Product Pic</th>
         <th>Product Name</th>
         <th>Product Price</th>
         <th>Current Quantity</th>
@@ -34,8 +35,12 @@ catch(PDOException $e)
 //        $productdescription = $product['ProductDesc'];
 //        $productprice = $product['Price'];
 //        $productquantity = $product['QuantityAval'];
+        $image = $product['ProductPic'];
+//        $image = "images/fireman.jpg";
         ?>
     <tr>
+        <td><img src="<?php echo $image ?>" alt="test" style="width: 50%; height: 50%" </td>
+<!--        <td>--><?php //echo "<img src=$product['ProductPic']"?><!--</td>-->
         <td><a href="purchase.php"><?php echo $product['ProductDesc']?></a></td>
         <td><?php echo $product['Price']?></td>
         <td><?php echo $product['QuantityAval']?></td>
