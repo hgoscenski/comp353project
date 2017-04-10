@@ -1,5 +1,6 @@
 <html>
 <head>
+
     <title>
         New User!
     </title>
@@ -109,8 +110,34 @@
             <input type="text" name="email" id="email"</label>
     </div>
 
-    <div><input type="submit" value="Submit"></div>
+    <div><input type="submit" value="Submit" id="submit"></div>
 </form>
 </body>
+
+<script>
+    document.getElementById("submit").onclick = inputValidation;
+    function inputValidation() {
+        if (!checkEmail(document.getElementById("email").value)) {
+            alert("Invalid Email");
+        }
+        if (!checkPhoneNumber(document.getElementById("phone").value)){
+            alert("Invalid Phone Number");
+        }
+    }
+    function checkEmail(email) {
+        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if (!reg.test(email)) {
+            return false;
+        }
+        return true;
+    }
+    function checkPhoneNumber(phone){
+        var reg = /^[0-9]{10}$/;
+        if (!reg.test(phone)) {
+            return false;
+        }
+        return true;
+    }
+</script>
 
 </html>
