@@ -1,3 +1,0 @@
-INSERT INTO fruityco.product (ProductDesc, ProductPic, Price, QuantityAval, AtCost) VALUES ('FruityBook Pro', 0x696D616765732F666972656D616E2E6A7067, 1500, 4, 1300);
-INSERT INTO fruityco.product (ProductDesc, ProductPic, Price, QuantityAval, AtCost) VALUES ('FruityBook Wind', 0x3C6E756C6C3E, 1100, 3, 900);
-INSERT INTO fruityco.product (ProductDesc, ProductPic, Price, QuantityAval, AtCost) VALUES ('FruityBox Expert', null, 3999.99, 1, 3029.85);

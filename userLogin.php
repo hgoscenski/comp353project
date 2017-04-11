@@ -16,7 +16,7 @@
 
 <body>
 <h1>If you already have an account, login:</h1>
-<form action="accountInfo.php" method="post">
+<form action="accountInfoUser.php" method="get">
     <div>
         <label for="username">Username <input type="text" name="username" id="username"></label>
     </div>
