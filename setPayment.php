@@ -12,10 +12,8 @@ $pdo = $GLOBALS['pdo'];
 if(isset($_get['what']) and $_GET['what']=='delete'){
     $pdo->query('DELETE FROM payment WHERE UserID='.$userid);
     echo 'Card deleted. <br>';
-    include 'userLogin.php';
 }
-
-if(isset($_GET['bname']) || isset($_GET['what'])){
+if(isset($_GET['bname'])){
     try {
         $pdo->query('DELETE FROM payment WHERE UserID='.$userid);
 

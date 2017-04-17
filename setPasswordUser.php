@@ -22,6 +22,7 @@ if(isset($_GET['password'])){
         $s->execute();
 
         echo "Password set!";
+        include 'userLogin.php';
 
 //        echo password_hash($_GET['password'], PASSWORD_DEFAULT)."\n";
     } catch (PDOException $e){
