@@ -55,12 +55,13 @@ if (isset($_GET['fname'])) {
                 <label for="password">Password<input type="password" name="password" id="password"</label>
                 <input type="hidden" name="email" value="<?php echo $emailHoldingItem;?>">
                 <input type="hidden" name="userid" value="<?= $userid;?>">
+                <input type="submit" value="Submit">
             </div>
         </form>
 
 <?php
     } catch (PDOException $e) {
-        $error = 'Error adding submitted department: ' . $e->getMessage();
+        $error = 'Error creating password.' . $e->getMessage();
         include 'error.html.php';
         exit();
     }
