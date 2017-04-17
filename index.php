@@ -42,7 +42,7 @@ catch(PDOException $e)
     <tr>
         <td><img src="<?php echo $image ?>" alt="test" style="width: 50%; height: 50%" </td>
 <!--        <td>--><?php //echo "<img src=$product['ProductPic']"?><!--</td>-->
-        <td><a href="purchase.php"><?php echo $product['ProductDesc']?></a></td>
+        <td><a href="<?php echo "purchase.php?"; if(isset($_GET['userid'])){echo "userid=".$_GET['userid']."&";} echo "productdesc=".$product['ProductDesc'];?>"><?php echo $product['ProductDesc']?></a></td>
         <td><?php echo $product['Price']?></td>
         <td><?php echo $product['QuantityAval']?></td>
     </tr>

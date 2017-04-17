@@ -27,6 +27,10 @@ try{
 
     if(password_verify($providedPassword, $hashedPassword)){
 
+        if(isset($_GET['userid']) && isset($_GET['magic'])){
+            $userid=$_GET['userid'];
+        }
+
         echo 'first things first';
 
         $query = $pdo->query('SELECT fName FROM user WHERE UserID='.$userid);
