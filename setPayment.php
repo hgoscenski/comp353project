@@ -9,7 +9,7 @@ include_once 'db.inc.php';
 $userid = $_GET['userid'];
 $pdo = $GLOBALS['pdo'];
 
-if(isset($_get['what']) and $_GET['what']=='delete'){
+if(isset($_GET['what']) and $_GET['what']=='delete'){
     $pdo->query('DELETE FROM payment WHERE UserID='.$userid);
     echo 'Card deleted. <br>';
 }
@@ -107,6 +107,9 @@ try{
             <div><label for="cardnum">Card Number
                     <input type="text" name="cardnum" id="cardnum"></label>
             </div>
+<!--            \d{16,16} validation for card number-->
+
+<!--            [1-12]{2,2}\/\d{2,2} validation for date-->
             <div><label for="cardexpiry">Expiration Date
                     <input type="text" name="cardexpiry" id="cardexpiry"></label>
             </div>

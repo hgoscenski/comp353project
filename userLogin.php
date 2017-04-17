@@ -16,17 +16,17 @@
 
 <body>
 <h1>If you already have an account, login:</h1>
-<form action="accountInfo.php" method="post">
+<form action="accountInfoUser.php" method="POST">
     <div>
         <label for="username">Username <input type="text" name="username" id="username"></label>
     </div>
     <div>
-        <label for="password">Password <input type="password" name="password" id="password"</label>
+        <label for="password">Password <input type="password" name="password" id="password"></label>
     </div>
     <div><input type="submit" value="Submit"></div>
 </form>
 
-<form action="addUser.php" method="get" id="form">
+<!--form action="addUser.php" method="get" id="form">
     <div><label for="fname">First Name:
             <input type="text" name="fname" id="fname"></label>
     </div>
@@ -100,9 +100,6 @@
     <div><label for="zipcode">Zip Code:
             <input type="text" name="zipcode" id="zipcode"</label>
     </div>
-    <div><label for="country">Country:
-            <input type="text" name="country" id="country"</label>
-    </div>
     <div><label for="phone">Phone Number:
             <input type="text" name="phone" id="phone"</label>
     </div>
@@ -111,7 +108,7 @@
     </div>
 
     <div><input type="submit" value="Submit" id="submit"></div>
-</form>
+</form-->
 </body>
 
 <script>
@@ -165,7 +162,7 @@
         return true;
     }
     function checkStreetAddress(streetaddress){
-        var reg = /^[a-zA-Z0-9]+$/;
+        var reg = /\d+ [a-zA-Z0-9]*/;
         if (!reg.test(streetaddress)){
             return false;
         }

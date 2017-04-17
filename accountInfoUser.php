@@ -1,9 +1,12 @@
+
 <html>
 <title>
     User Page!
 </title>
 <body>
 <?php
+
+$userName = $_POST['username'];
 include_once 'db.inc.php';
 try{
 //    echo $_GET['username']."   ".$_GET['password'];
@@ -11,7 +14,7 @@ try{
 
     $sql = 'SELECT PasswordHash,UserID FROM user WHERE EmailAddress = :email';
     $s = $pdo->prepare($sql);
-    $s->bindValue(':email', $_GET['username']);
+    $s->bindValue(':email', $_POST['username']);
     $s->execute();
 
     $results = $s->fetch();
@@ -21,7 +24,7 @@ try{
 
 //    echo $hashedPassword."     ".$userid;
 
-    $providedPassword = $_GET['password'];
+    $providedPassword = $_POST['password'];
 
 //    echo "    ".$providedPassword;
 
@@ -71,11 +74,6 @@ try{
 
 }
 ?>
-<!--/**-->
-<!-- * Created by PhpStorm.-->
-<!-- * User: hgoscenski-->
-<!-- * Date: 4/6/17-->
-<!-- * Time: 10:39-->
-<!-- */-->
+
 </body>
 </html>

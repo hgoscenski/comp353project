@@ -33,7 +33,7 @@ if (isset($_GET['fname'])) {
         $s->bindValue(':city', $_GET['city']);
         $s->bindValue(':state', $_GET['state']);
         $s->bindValue(':zipcode', $_GET['zipcode']);
-        $s->bindValue(':country', $_GET['country']);
+        $s->bindValue(':country', "USA");
         $s->bindValue(':phone', $_GET['phone']);
         $s->bindValue(':email', $emailHoldingItem);
         $s->execute();
