@@ -10,14 +10,12 @@ if(isset($_GET['password'])){
     try{
         echo $_GET['userid'];
 
-        $sql = 'INSERT INTO loginuser SET 
-            EmailAddress = :email,
-            SaltedPassword = :password,
-            UserID = :userid';
+        $sql = 'UPDATE user SET 
+            PasswordHash = :password
+            WHERE UserID = :userid';
 
         $s = $GLOBALS['pdo']->prepare($sql);
 
-        $s->bindValue(':email', $_GET['email']);
         $s->bindValue(':password', password_hash($_GET['password'], PASSWORD_DEFAULT));
         $s->bindValue(':userid', $_GET['userid']);
 

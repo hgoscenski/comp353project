@@ -22,6 +22,7 @@ catch(PDOException $e)
 <h1>Hello and Welcome to Fruity Co.</h1>
 <h2>If you are an employee Login <a href="emplogin.php">Here</a> </h2>
 <h2>If you are an existing customer Login <a href="userlogin.php">Here</a> </h2>
+<h2>If you need to request repairs click <a href="requestRepairs.php">Here</a>"</h2>
 <h2>This is a list of our currently available products:</h2>
 <h3>As we are exclusive and handcraft all of our products we do restrict orders to a maximum of 1 per month per customer</h3>
 <table>

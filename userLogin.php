@@ -15,16 +15,18 @@
 ?>
 
 <body>
+
 <h1>If you already have an account, login:</h1>
 <form action="accountInfoUser.php" method="get">
     <div>
-        <label for="username">Username <input type="text" name="username" id="username"></label>
+        <label for="username">Email <input type="text" name="username" id="username"></label>
     </div>
     <div>
         <label for="password">Password <input type="password" name="password" id="password"</label>
     </div>
     <div><input type="submit" value="Submit"></div>
 </form>
+
 
 <form action="addUser.php" method="get">
     <div><label for="fname">First Name:
