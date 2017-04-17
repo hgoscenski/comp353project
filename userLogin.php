@@ -26,7 +26,7 @@
     <div><input type="submit" value="Submit"></div>
 </form>
 
-<form action="addUser.php" method="get">
+<form action="addUser.php" method="get" id="form">
     <div><label for="fname">First Name:
             <input type="text" name="fname" id="fname"></label>
     </div>
@@ -116,16 +116,35 @@
 
 <script>
     document.getElementById("submit").onclick = inputValidation;
+
     function inputValidation() {
+        var valid = true;
         if (!checkEmail(document.getElementById("email").value)) {
             alert("Invalid Email");
+            valid = false;        }
+        if (!checkStreetAddress(document.getElementById("streetaddress").value)){
+            alert("Invalid Street Address");
+            valid = false;
+        }
+        if (!checkZipCode(document.getElementById("zipcode").value)){
+            alert("Invalid Zip Code");
+            valid = false;
         }
         if (!checkPhoneNumber(document.getElementById("phone").value)){
             alert("Invalid Phone Number");
+            valid = false;
         }
+        if (!valid){
+            document.getElementById("form").removeAttribute("action");
+        }
+        else if(valid && !document.getElementById("form").hasAttribute("action")) {
+            document.getElementById("form").setAttribute("action", "addUser.php");
+        }
+
     }
+
     function checkEmail(email) {
-        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        var reg = /^([A-Za-z0-9_\-\.]{3,20})+\@([A-Za-z0-9_\-\.]{2,15})+\.([A-Za-z]{2,4})$/;
         if (!reg.test(email)) {
             return false;
         }
@@ -137,6 +156,21 @@
             return false;
         }
         return true;
+    }
+    function checkZipCode(zipcode) {
+        var reg = /^\d{5}$/;
+        if (!reg.test(zipcode)) {
+            return false;
+        }
+        return true;
+    }
+    function checkStreetAddress(streetaddress){
+        var reg = /^[a-zA-Z0-9]+$/;
+        if (!reg.test(streetaddress)){
+            return false;
+        }
+        return true;
+
     }
 </script>
 
