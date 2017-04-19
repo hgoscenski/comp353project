@@ -26,7 +26,7 @@
     <div><input type="submit" value="Submit"></div>
 </form>
 
-<!--form action="addUser.php" method="get" id="form">
+<form action="addUser.php" method="get" id="form">
     <div><label for="fname">First Name:
             <input type="text" name="fname" id="fname"></label>
     </div>
@@ -108,7 +108,7 @@
     </div>
 
     <div><input type="submit" value="Submit" id="submit"></div>
-</form-->
+</form>
 </body>
 
 <script>
