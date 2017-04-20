@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="fruityco@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.0">
+    <root id="1"/>
+    <schema id="2" parent="1" name="fruityco">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="classicmodels"/>
+    <schema id="4" parent="1" name="company"/>
+    <schema id="5" parent="1" name="hgoscenski"/>
+    <schema id="6" parent="1" name="information_schema"/>
+    <schema id="7" parent="1" name="mysql"/>
+    <schema id="8" parent="1" name="performance_schema"/>
+    <schema id="9" parent="1" name="phpconnect"/>
+    <schema id="10" parent="1" name="pinevalley"/>
+    <schema id="11" parent="1" name="student_registration"/>
+    <schema id="12" parent="1" name="test"/>
+    <schema id="13" parent="1" name="university"/>
+    <table id="14" parent="2" name="department"/>
+    <table id="15" parent="2" name="employee"/>
+    <table id="16" parent="2" name="loginemployee"/>
+    <table id="17" parent="2" name="loginuser"/>
+    <table id="18" parent="2" name="order"/>
+    <table id="19" parent="2" name="orderline"/>
+    <table id="20" parent="2" name="payment"/>
+    <table id="21" parent="2" name="product"/>
+    <table id="22" parent="2" name="requestedrepairs"/>
+    <table id="23" parent="2" name="user"/>
+    <column id="24" parent="14" name="DepartmentID">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="25" parent="14" name="Location">
+      <Position>2</Position>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="26" parent="14" name="DepartmentDesc">
+      <Position>3</Position>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="27" parent="14" name="ManagerID">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="28" parent="14" name="Department_DepartmentID_uindex">
+      <ColNames>DepartmentID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="29" parent="14" name="department_employee_EmployeeID_fk">
+      <ColNames>ManagerID</ColNames>
+    </index>
+    <key id="30" parent="14" name="PRIMARY">
+      <ColNames>DepartmentID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="31" parent="14" name="Department_DepartmentID_uindex">
+      <ColNames>DepartmentID</ColNames>
+      <UnderlyingIndexName>Department_DepartmentID_uindex</UnderlyingIndexName>
+    </key>
+    <foreign-key id="32" parent="14" name="department_employee_EmployeeID_fk">
+      <ColNames>ManagerID</ColNames>
+      <RefSchemaName>fruityco</RefSchemaName>
+      <RefTableName>employee</RefTableName>
+      <RefColNames>EmployeeID</RefColNames>
+    </foreign-key>
+    <column id="33" parent="15" name="EmployeeID">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="34" parent="15" name="DepartmentID">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="35" parent="15" name="Fname">
+      <Position>3</Position>
+      <DataType>varchar(12)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="36" parent="15" name="Lname">
+      <Position>4</Position>
+      <DataType>varchar(12)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="37" parent="15" name="Compensation">
+      <Position>5</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="38" parent="15" name="DOB">
+      <Position>6</Position>
+      <DataType>date|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="39" parent="15" name="SSN">
+      <Position>7</Position>
+      <DataType>varchar(9)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="40" parent="15" name="EmployeeStatus">
+      <Position>8</Position>
+      <DataType>varchar(3)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="41" parent="15" name="SupID">
+      <Position>9</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <index id="42" parent="15" name="employee_department_DepartmentID_fk">
+      <ColNames>DepartmentID</ColNames>
+    </index>
+    <index id="43" parent="15" name="Employee_EmployeeID_uindex">
+      <ColNames>EmployeeID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="44" parent="15" name="employee__EmployeeID_fk">
+      <ColNames>SupID</ColNames>
+    </index>
+    <key id="45" parent="15" name="PRIMARY">
+      <ColNames>EmployeeID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="46" parent="15" name="Employee_EmployeeID_uindex">
+      <ColNames>EmployeeID</ColNames>
+      <UnderlyingIndexName>Employee_EmployeeID_uindex</UnderlyingIndexName>
+    </key>
+    <foreign-key id="47" parent="15" name="employee_department_DepartmentID_fk">
+      <ColNames>DepartmentID</ColNames>
+      <RefSchemaName>fruityco</RefSchemaName>
+      <RefTableName>department</RefTableName>
+      <RefColNames>DepartmentID</RefColNames>
+    </foreign-key>
+    <foreign-key id="48" parent="15" name="employee__EmployeeID_fk">
+      <ColNames>SupID</ColNames>
+      <RefSchemaName>fruityco</RefSchemaName>
+      <RefTableName>employee</RefTableName>
+      <RefColNames>EmployeeID</RefColNames>
+    </foreign-key>
+    <column id="49" parent="16" name="EmployeeID">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="50" parent="16" name="SaltedPassword">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <key id="51" parent="16" name="PRIMARY">
+      <ColNames>EmployeeID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="52" parent="16" name="loginemployee_employee_EmployeeID_fk">
+      <ColNames>EmployeeID</ColNames>
+      <RefSchemaName>fruityco</RefSchemaName>
+      <RefTableName>employee</RefTableName>
+      <RefColNames>EmployeeID</RefColNames>
+    </foreign-key>
+    <column id="53" parent="17" name="EmailAddress">
+      <Position>1</Position>
+      <DataType>varchar(50)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="54" parent="17" name="SaltedPassword">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="55" parent="17" name="UserID">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="56" parent="17" name="LoginUser_EmailAddress_uindex">
+      <ColNames>EmailAddress</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="57" parent="17" name="LoginUser_SaltedPassword_uindex">
+      <ColNames>SaltedPassword</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="58" parent="17" name="LoginUser_user_UserID_fk">
+      <ColNames>UserID</ColNames>
+    </index>
+    <key id="59" parent="17" name="PRIMARY">
+      <ColNames>EmailAddress</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="60" parent="17" name="LoginUser_EmailAddress_uindex">
+      <ColNames>EmailAddress</ColNames>
+      <UnderlyingIndexName>LoginUser_EmailAddress_uindex</UnderlyingIndexName>
+    </key>
+    <key id="61" parent="17" name="LoginUser_SaltedPassword_uindex">
+      <ColNames>SaltedPassword</ColNames>
+      <UnderlyingIndexName>LoginUser_SaltedPassword_uindex</UnderlyingIndexName>
+    </key>
+    <foreign-key id="62" parent="17" name="LoginUser_user_UserID_fk">
+      <ColNames>UserID</ColNames>
+      <RefSchemaName>fruityco</RefSchemaName>
+      <RefTableName>user</RefTableName>
+      <RefColNames>UserID</RefColNames>
+    </foreign-key>
+    <column id="63" parent="18" name="OrderID">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="64" parent="18" name="PayID">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="65" parent="18" name="UserID">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="66" parent="18" name="Date">
+      <Position>4</Position>
+      <DataType>date|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="67" parent="18" name="Order_OrderID_uindex">
+      <ColNames>OrderID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="68" parent="18" name="order_payment_PayID_fk">
+      <ColNames>PayID</ColNames>
+    </index>
+    <index id="69" parent="18" name="order_user_UserID_fk">
+      <ColNames>UserID</ColNames>
+    </index>
+    <key id="70" parent="18" name="PRIMARY">
+      <ColNames>OrderID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="71" parent="18" name="Order_OrderID_uindex">
+      <ColNames>OrderID</ColNames>
+      <UnderlyingIndexName>Order_OrderID_uindex</UnderlyingIndexName>
+    </key>
+    <foreign-key id="72" parent="18" name="order_payment_PayID_fk">
+      <ColNames>PayID</ColNames>
+      <RefSchemaName>fruityco</RefSchemaName>
+      <RefTableName>payment</RefTableName>
+      <RefColNames>PayID</RefColNames>
+    </foreign-key>
+    <foreign-key id="73" parent="18" name="order_user_UserID_fk">
+      <ColNames>UserID</ColNames>
+      <RefSchemaName>fruityco</RefSchemaName>
+      <RefTableName>user</RefTableName>
+      <RefColNames>UserID</RefColNames>
+    </foreign-key>
+    <column id="74" parent="19" name="OrderLineId">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="75" parent="19" name="ProductID">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="76" parent="19" name="OrderID">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="77" parent="19" name="Quantity">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="78" parent="19" name="OrderID_fk">
+      <ColNames>OrderID</ColNames>
+    </index>
+    <index id="79" parent="19" name="OrderLine_OrderLineId_uindex">
+      <ColNames>OrderLineId</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="80" parent="19" name="ProductID_fk">
+      <ColNames>ProductID</ColNames>
+    </index>
+    <key id="81" parent="19" name="PRIMARY">
+      <ColNames>OrderLineId</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="82" parent="19" name="OrderLine_OrderLineId_uindex">
+      <ColNames>OrderLineId</ColNames>
+      <UnderlyingIndexName>OrderLine_OrderLineId_uindex</UnderlyingIndexName>
+    </key>
+    <foreign-key id="83" parent="19" name="ProductID_fk">
+      <ColNames>ProductID</ColNames>
+      <RefSchemaName>fruityco</RefSchemaName>
+      <RefTableName>product</RefTableName>
+      <RefColNames>ProductID</RefColNames>
+    </foreign-key>
+    <foreign-key id="84" parent="19" name="OrderID_fk">
+      <ColNames>OrderID</ColNames>
+      <RefSchemaName>fruityco</RefSchemaName>
+      <RefTableName>order</RefTableName>
+      <RefColNames>OrderID</RefColNames>
+    </foreign-key>
+    <column id="85" parent="20" name="PayID">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="86" parent="20" name="BillingName">
+      <Position>2</Position>
+      <DataType>varchar(50)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="87" parent="20" name="BillingStreetAddress">
+      <Position>3</Position>
+      <DataType>varchar(50)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="88" parent="20" name="BillingCity">
+      <Position>4</Position>
+      <DataType>varchar(15)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="89" parent="20" name="BillingState">
+      <Position>5</Position>
+      <DataType>varchar(15)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="90" parent="20" name="BillingZipCode">
+      <Position>6</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="91" parent="20" name="BillingCountry">
+      <Position>7</Position>
+      <DataType>varchar(15)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="92" parent="20" name="CreditCardNum">
+      <Position>8</Position>
+      <DataType>varchar(16)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="93" parent="20" name="CreditCardExpiryDate">
+      <Position>9</Position>
+      <DataType>varchar(5)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="94" parent="20" name="CreditCardSecurityCode">
+      <Position>10</Position>
+      <DataType>varchar(3)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="95" parent="20" name="Payment_PayID_uindex">
+      <ColNames>PayID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="96" parent="20" name="PRIMARY">
+      <ColNames>PayID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="97" parent="20" name="Payment_PayID_uindex">
+      <ColNames>PayID</ColNames>
+      <UnderlyingIndexName>Payment_PayID_uindex</UnderlyingIndexName>
+    </key>
+    <column id="98" parent="21" name="ProductID">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="99" parent="21" name="ProductDesc">
+      <Position>2</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="100" parent="21" name="ProductPic">
+      <Position>3</Position>
+      <DataType>blob|0</DataType>
+    </column>
+    <column id="101" parent="21" name="Price">
+      <Position>4</Position>
+      <DataType>float|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="102" parent="21" name="QuantityAval">
+      <Position>5</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="103" parent="21" name="AtCost">
+      <Position>6</Position>
+      <DataType>float|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="104" parent="21" name="Product_ProductID_uindex">
+      <ColNames>ProductID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="105" parent="21" name="PRIMARY">
+      <ColNames>ProductID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="106" parent="21" name="Product_ProductID_uindex">
+      <ColNames>ProductID</ColNames>
+      <UnderlyingIndexName>Product_ProductID_uindex</UnderlyingIndexName>
+    </key>
+    <column id="107" parent="22" name="RequestID">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="108" parent="22" name="UserID">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="109" parent="22" name="ProductID">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="110" parent="22" name="OrderID">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="111" parent="22" name="RequestDate">
+      <Position>5</Position>
+      <DataType>date|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="112" parent="22" name="requestedrepairs_order_OrderID_fk">
+      <ColNames>OrderID</ColNames>
+    </index>
+    <index id="113" parent="22" name="requestedrepairs_product_ProductID_fk">
+      <ColNames>ProductID</ColNames>
+    </index>
+    <index id="114" parent="22" name="RequestedRepairs_RequestID_uindex">
+      <ColNames>RequestID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="115" parent="22" name="requestedrepairs_user_UserID_fk">
+      <ColNames>UserID</ColNames>
+    </index>
+    <key id="116" parent="22" name="PRIMARY">
+      <ColNames>RequestID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="117" parent="22" name="RequestedRepairs_RequestID_uindex">
+      <ColNames>RequestID</ColNames>
+      <UnderlyingIndexName>RequestedRepairs_RequestID_uindex</UnderlyingIndexName>
+    </key>
+    <foreign-key id="118" parent="22" name="requestedrepairs_user_UserID_fk">
+      <ColNames>UserID</ColNames>
+      <RefSchemaName>fruityco</RefSchemaName>
+      <RefTableName>user</RefTableName>
+      <RefColNames>UserID</RefColNames>
+    </foreign-key>
+    <foreign-key id="119" parent="22" name="requestedrepairs_product_ProductID_fk">
+      <ColNames>ProductID</ColNames>
+      <RefSchemaName>fruityco</RefSchemaName>
+      <RefTableName>product</RefTableName>
+      <RefColNames>ProductID</RefColNames>
+    </foreign-key>
+    <foreign-key id="120" parent="22" name="requestedrepairs_order_OrderID_fk">
+      <ColNames>OrderID</ColNames>
+      <RefSchemaName>fruityco</RefSchemaName>
+      <RefTableName>order</RefTableName>
+      <RefColNames>OrderID</RefColNames>
+    </foreign-key>
+    <column id="121" parent="23" name="UserID">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="122" parent="23" name="PayID">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="123" parent="23" name="ShipStreetAddress">
+      <Position>3</Position>
+      <DataType>varchar(20)|0</DataType>
+    </column>
+    <column id="124" parent="23" name="ShipCity">
+      <Position>4</Position>
+      <DataType>varchar(15)|0</DataType>
+    </column>
+    <column id="125" parent="23" name="ShipState">
+      <Position>5</Position>
+      <DataType>varchar(15)|0</DataType>
+    </column>
+    <column id="126" parent="23" name="ShipZipCode">
+      <Position>6</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="127" parent="23" name="ShipCountry">
+      <Position>7</Position>
+      <DataType>varchar(15)|0</DataType>
+    </column>
+    <column id="128" parent="23" name="PhoneNumber">
+      <Position>8</Position>
+      <DataType>varchar(10)|0</DataType>
+    </column>
+    <column id="129" parent="23" name="EmailAddress">
+      <Position>9</Position>
+      <DataType>varchar(50)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="130" parent="23" name="fName">
+      <Position>10</Position>
+      <DataType>varchar(15)|0</DataType>
+    </column>
+    <column id="131" parent="23" name="LName">
+      <Position>11</Position>
+      <DataType>varchar(15)|0</DataType>
+    </column>
+    <index id="132" parent="23" name="user_payment_PayID_fk">
+      <ColNames>PayID</ColNames>
+    </index>
+    <index id="133" parent="23" name="User_UserID_uindex">
+      <ColNames>UserID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="134" parent="23" name="PRIMARY">
+      <ColNames>UserID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="135" parent="23" name="User_UserID_uindex">
+      <ColNames>UserID</ColNames>
+      <UnderlyingIndexName>User_UserID_uindex</UnderlyingIndexName>
+    </key>
+    <foreign-key id="136" parent="23" name="user_payment_PayID_fk">
+      <ColNames>PayID</ColNames>
+      <RefSchemaName>fruityco</RefSchemaName>
+      <RefTableName>payment</RefTableName>
+      <RefColNames>PayID</RefColNames>
+    </foreign-key>
+  </database-model>
+</dataSource>

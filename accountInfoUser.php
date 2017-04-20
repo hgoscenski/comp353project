@@ -7,6 +7,7 @@
 <?php
 
 $userName = $_POST['username'];
+echo $userName;
 include_once 'db.inc.php';
 try{
 //    echo $_GET['username']."   ".$_GET['password'];
@@ -25,6 +26,7 @@ try{
 //    echo $hashedPassword."     ".$userid;
 
     $providedPassword = $_POST['password'];
+    echo $providedPassword;
 
 //    echo "    ".$providedPassword;
 
