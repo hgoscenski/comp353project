@@ -9,18 +9,60 @@
 
 include "db.inc.php";
 $pdo = $GLOBALS['pdo'];
+setlocale(LC_MONETARY, 'en_US');
 try{
 if(isset($_POST['newpass']) and isset($_POST['empid'])){
     $newpass = $_POST['newpass'];
     $newpass = password_hash($newpass, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO employee SET SaltedPassword = :newpassword";
+    $sql = "UPDATE employee SET SaltedPassword = :newpassword WHERE EmployeeID =".$_POST['empid'];
     $s = $pdo->prepare($sql);
     $s->bindValue(':newpassword', $newpass);
+    // $s->bindValue(':empid', $_POST['empid']);
+    $s->execute();
     echo "Employee ".$_POST['empid']."'s password has been updated.";
+}
+
+if(isset($_POST['fname']) and isset($_POST['ssn'])){
+    $sql = "INSERT INTO employee SET 
+    DepartmentID = :dept,
+    Fname = :fname,
+    Lname = :lname,
+    Compansation = :comp,
+    DOB = :dob,
+    SSN = :ssn,
+    EmployeeStatus = :empStatus,
+    SupID = :supid,
+    SaltedPassword = :pass";
+    $s = $pdo->prepare($sql);
+    $s->bindValue(':dept', $_POST['dept']);
+    $s->bindValue(':fname', $_POST['fname']);
+    $s->bindValue(':lname', $_POST['lname']);
+    $s->bindValue(':comp', $_POST['compensation']);
+    $s->bindValue(':dob',$_POST['dob']);
+    $s->bindValue(':ssn', $_POST['ssn']);
+    $s->bindValue(':empStatus', $_POST['status']);
+    $s->bindValue(':supid', $_POST['supid']);
+    $s->bindValue(':pass', password_hash($_POST['pass'], PASSWORD_DEFAULT));
+    $s->execute();
+
+    $empID = $pdo->query("SELECT EmployeeID FROM employee WHERE SSN = ".$_POST['ssn']);
+    $empID = $empID->fetch();
+
+    echo "User ".var_dump($empID)." added.";
+
 }
 
 if(isset($_POST['viewaboveavgsalary'])){
     // display those with above average salaries per department
+}
+
+if(isset($_POST['viewcustwithoutorder'])){
+    // 
+    $noOrders = $pdo->query("SELECT LName,fName FROM user WHERE NOT EXISTS(SELECT UserID FROM fruityco.order WHERE user.UserID = fruityco.order.UserID)");
+    $noOrders = $noOrders->fetchAll();
+    var_dump($noOrders);
+    // Need to make this return a table
+    // This is a subquery though!
 }
 
 if(isset($_POST['year']) and isset($_POST['month'])){
@@ -28,11 +70,24 @@ if(isset($_POST['year']) and isset($_POST['month'])){
 }
 
 if(isset($_POST['productsalesview'])){
-    // view sales by product 
+    $sql = "SELECT COUNT(*) FROM orderline O JOIN product P ON P.ProductID = O.ProductID WHERE P.ProductDesc = :proddesc";
+    $s = $pdo->prepare($sql);
+    $s->bindValue(':proddesc', $_POST['productsalesview']);
+    $s->execute();
+    $results = $s->fetch();
+    
+    var_dump($results);
+
+    // will need to format nicely
+
 }
 
 if(isset($_POST['deleteuser'])){
-    // delete specified user
+    $sql = ("DELETE FROM user WHERE UserID = :userid");
+    $s = $pdo->prepare($sql);
+    $s->bindValue(':userid', $_POST['deleteuser']);
+    $s->execute();
+    echo "User " . $_POST['deleteuser'] . " has been deleted.";
 }
 
 $employeeArray = $pdo->query("SELECT EmployeeID FROM employee");
@@ -60,15 +115,27 @@ foreach($deptarray as $indarray){
     $deptlist[] = $indarray[1];
 }
 
+$numOrderMonth = $pdo->query("SELECT count(*) FROM fruityco.order WHERE MONTH(Date) = MONTH(now())");
+$numOrderMonth = $numOrderMonth->fetch();
+$numOrderMonth = $numOrderMonth[0];
 
+$totalRevPerMonth = $pdo->query("SELECT SUM(Price) FROM product P JOIN orderline O ON P.ProductID = O.ProductID WHERE EXISTS (SELECT * FROM fruityco.order WHERE MONTH(Date) = MONTH(now()))");
+$totalRevPerMonth = $totalRevPerMonth->fetch();
+$totalRevPerMonth = $totalRevPerMonth[0];
+
+$avgRevPerOrderMonth = $totalRevPerMonth / $numOrderMonth;
 ?>
 
 <body>
 
 <h1>
-Hello World!
+Good Day!
 </h1>
-
+<h2>
+Orders this month: <?=$numOrderMonth?> <br>
+Total Sales This Month: <?="$ ".number_format($totalRevPerMonth,2)?> <br>
+Average Revenue per Order current Month: <?="$ ".number_format($avgRevPerOrderMonth ,2)?>
+</h2>
 <h2>Change Employee Passwords</h2>
     <form action="employeepage.php" method="post">
         <!--<label for="empid">Employee ID<input type="text" name="empid"></label><br>-->
@@ -135,6 +202,12 @@ Hello World!
         <input type="submit" value="View Results">
     </form>
 
+<h2>View Customers without Orders</h2>
+    <form action="employeepage.php" method="post">
+        <input type="hidden" name="viewcustwithoutorder" value="true">
+        <input type="submit" value="View Customers without Orders">
+    </form>
+
 <h2>Add New Employee</h2>
     <form action="employeepage.php" action="post">
     <div><label for="fname">First Name:
@@ -169,6 +242,9 @@ Hello World!
                 <option value="<?=$dept?>"> <?=$dept?> </option>
             <?php } ?>
         </select><br>
+    </div>
+    <div><label for="pass">Last Name:
+        <input type="text" name="pass" id="pass"></label>
     </div>
 
     <input type="hidden" name="status" value="ACT">
