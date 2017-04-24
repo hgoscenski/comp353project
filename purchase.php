@@ -1,28 +1,75 @@
 <?php
 include_once 'db.inc.php';
 $pdo = $GLOBALS['pdo'];
+$productId = $_GET['productId'];
+if(isset($_POST['prodid'])){
+    $productId = $_POST['prodid'];
+}
+
+// var_dump($_POST);
+date_default_timezone_set("UTC");
+echo date('Y/m/d')."<br>";
 
 if(isset($_POST['quantity'])){
-    $prodid = $_POST['prodid'];
-    $orderid = $_POST['orderid'];
-    $quanity = $_POST['quantity'];
+    try{
+        $pdo->beginTransaction();
+    // var_dump($_POST);
+    // echo "<br> Testing <br>";
 
-    $sql = "INSERT INTO orderlines SET 
-    ProductID = :prodid,
-    OrderID = :orderid,
-    Quantity = :quantity";
+    $sql = "INSERT INTO fruityco.order SET
+        PayID = :payid,
+        UserID = :userid,
+        order.Date = :datedate";
     $s = $pdo->prepare($sql);
-    $s->bindValue(':prodid', $prodid);
-    $s->bindValue(':orderid', $orderid);
-    $s->bindValue(':quantity', $quanity);
+    $s->bindValue(':payid', $_POST['paymentid']);
+    $s->bindValue(':userid', $_POST['userid']);
+    $s->bindValue(':datedate', date('Y/m/d'));
     $s->execute();
 
-    echo "Truth!!";
+    // echo "<br>Order Created<br>";
+
+    $sql = "SELECT OrderID FROM fruityco.order WHERE
+        PayID = :payid AND
+        UserID = :userid AND
+        order.Date = :datedate";
+    $s = $pdo->prepare($sql);
+    $s->bindValue(':payid', $_POST['paymentid']);
+    $s->bindValue(':userid', $_POST['userid']);
+    $s->bindValue(':datedate', date('Y/m/d'));
+    $s->execute();
+
+    $orderid = $s->fetch();
+    $orderid = $orderid[0];
+
+    // echo $orderid;
+
+    // echo "<br>Order ID Pulled<br>";
+
+    // $orderid = $_POST['orderid'];
+    $quantity = $_POST['quantity'];
+
+    $sql = "INSERT INTO orderline SET 
+    ProductID = $productId,
+    OrderID = $orderid,
+    Quantity = $quantity";
+    // echo $sql;
+    $s = $pdo->prepare($sql);
+    // $s->bindValue(':prodid', $productId);
+    // $s->bindValue(':orderid', $orderid);
+    // $s->bindValue(':quantity', $quantity);
+    $s->execute();
+    $pdo->commit();
+    } catch (PDOException $e){
+        $pdo->rollBack();
+        die($e->getMessage());
+    }
+
+    echo "Product Purchased!";
+    include "index.php";
+    quit();
 
 }
 
-$productId = $_GET['productId'];
-$pdo = $GLOBALS['pdo'];
 
 if(isset($_GET['userid'])){
     $userid = $_GET['userid'];
@@ -48,22 +95,21 @@ try {
 //    $sql = "SELECT * FROM product WHERE ProductDesc=".$productdesc;
 //    $productInfo = $pdo->query($sql);
 //    $productId = $productInfo[0]['ProductId'];
-    echo $productId."<br>";
-    echo $userid."<br>";
-    echo $paymentid['PayID']."<br>";
-    echo $paymentid['CreditCardNum']."<br>";
-    date_default_timezone_set("UTC");
-    echo date('m/d/Y')."<br>";
+    // echo $productId."<br>";
+    // echo $userid."<br>";
+    // echo $paymentid['PayID']."<br>";
+    // echo $paymentid['CreditCardNum']."<br>";
+
     ?>
 
-    <label for="paymentid">Payment Method: Card ending in
+    <!--<label for="paymentid">Payment Method: Card ending in
     <select name="<?= substr($paymentid['CreditCardNum'],-4)?>">
-        <option value="<?= substr($paymentid['CreditCardNum'],-4)?>"><?= substr($paymentid['CreditCardNum'],-4)?></option>
-    </select>
+        <option value="<?= $paymentid['CreditCardNum']?>"><?= substr($paymentid['CreditCardNum'],-4)?></option>
+    </select>-->
 
 
     <?php
-    echo "<br><br>";
+    echo "<br>";
     $sql = ("SELECT * FROM product WHERE ProductID = :productid");
     $s = $pdo->prepare($sql);
     $s->bindValue(':productid', $productId);
@@ -73,16 +119,20 @@ try {
 
     // need ot create orderid here and insert into order table
 
-    echo $productInfo['ProductDesc'].", costing ".$productInfo['Price']."<br>";
+    echo "1 ".$productInfo['ProductDesc'].", costing $".number_format($productInfo['Price'],2)."<br>";
+    echo $productId;
     ?>
-    <form>
+
         <form action="purchase.php" method="post">
-            <input type='hidden' name="orderid" value="<?= $orderid ?>">
-            <input type='hidden' name='prodid' value="<?= $productId ?>">
-            <input type='hidden' name='quantity' value=1 >
+            <label for="paymentid">Payment Method: Card ending in
+            <select name="paymentid">
+                <option value="<?= $paymentid['PayID']?>"><?= substr($paymentid['CreditCardNum'],-4)?></option>
+            </select></label>
+            <input type='hidden' name='prodid' value="<?=$productId?>">
+            <input type='hidden' name='userid' value="<?=$userid?>">
+            <input type='hidden' name='quantity' value= 1 >
             <input type="submit" value="Purchase Product!">
         </form>
-    </form>
     <?php
 ?>
 
