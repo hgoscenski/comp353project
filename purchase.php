@@ -41,27 +41,22 @@ if(isset($_POST['quantity'])){
     $orderid = $s->fetch();
     $orderid = $orderid[0];
 
-    // echo $orderid;
-
-    // echo "<br>Order ID Pulled<br>";
-
-    // $orderid = $_POST['orderid'];
     $quantity = $_POST['quantity'];
 
     $sql = "INSERT INTO orderline SET 
-    ProductID = $productId,
-    OrderID = $orderid,
-    Quantity = $quantity";
+    ProductID = :prodid,
+    OrderID = :orderid,
+    Quantity = :quantity";
     // echo $sql;
     $s = $pdo->prepare($sql);
-    // $s->bindValue(':prodid', $productId);
-    // $s->bindValue(':orderid', $orderid);
-    // $s->bindValue(':quantity', $quantity);
+    $s->bindValue(':prodid', $productId);
+    $s->bindValue(':orderid', $orderid);
+    $s->bindValue(':quantity', $quantity);
     $s->execute();
     $pdo->commit();
     } catch (PDOException $e){
         $pdo->rollBack();
-        die($e->getMessage());
+        die($e->getMessage()."<br>The transaction failed to commit and has been rolled back!");
     }
 
     echo "Product Purchased!";
