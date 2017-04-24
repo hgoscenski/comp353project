@@ -9,6 +9,8 @@
 
 include "db.inc.php";
 $pdo = $GLOBALS['pdo'];
+// var_dump($_POST);
+// var_dump($_GET);
 setlocale(LC_MONETARY, 'en_US');
 try{
 if(isset($_POST['newpass']) and isset($_POST['empid'])){
@@ -27,16 +29,26 @@ if(isset($_POST['termEmp'])){
 }
 
 if(isset($_POST['fname']) and isset($_POST['ssn'])){
+    // $tempSql = "SELECT DepartmentID FROM department WHERE DepartmentDesc = :deptdesc";
+    // $s = $pdo->prepare($tempSql);
+    // $s->bindValues(':deptdesc', $_POST['dept']);
+    // // $deptNum = $pdo->query($tempSql);
+    // $s->execute();
+    // $deptNum = $s->fetch();
+    // var_dump($deptNum);
+    // $deptNum = $deptNum[0];
+    echo $_POST['dept'];
     $sql = "INSERT INTO employee SET 
-    DepartmentID = :dept,
+    DepartmentID = (SELECT DepartmentID FROM department WHERE DepartmentDesc= :dept),
     Fname = :fname,
     Lname = :lname,
-    Compansation = :comp,
+    Compensation = :comp,
     DOB = :dob,
     SSN = :ssn,
     EmployeeStatus = :empStatus,
     SupID = :supid,
     SaltedPassword = :pass";
+    // $sql = "INSERT INTO employee Values (:dept, :fname, :lname, :comp, :dob, :ssn, :empStatus, :supid, :pass";
     $s = $pdo->prepare($sql);
     $s->bindValue(':dept', $_POST['dept']);
     $s->bindValue(':fname', $_POST['fname']);
@@ -52,7 +64,7 @@ if(isset($_POST['fname']) and isset($_POST['ssn'])){
     $empID = $pdo->query("SELECT EmployeeID FROM employee WHERE SSN = ".$_POST['ssn']);
     $empID = $empID->fetch();
 
-    echo "User ".var_dump($empID)." added.";
+    echo "User added.";
 
 }
 
@@ -131,6 +143,7 @@ $deptarray = $pdo->query("SELECT DepartmentID,DepartmentDesc FROM department");
 $deptarray = $deptarray->fetchAll();
 foreach($deptarray as $indarray){
     $deptlist[] = $indarray[1];
+
 }
 
 $numOrderMonth = $pdo->query("SELECT count(*) FROM fruityco.order WHERE MONTH(Date) = MONTH(now())");
@@ -239,7 +252,7 @@ Average Revenue per Order current Month: <?="$ ".number_format($avgRevPerOrderMo
     </form>
 
 <h2>Add New Employee</h2>
-    <form action="employeepage.php" action="post">
+    <form action="employeepage.php" method="post">
     <div><label for="fname">First Name:
         <input type="text" name="fname" id="fname"></label>
     </div>
@@ -252,7 +265,7 @@ Average Revenue per Order current Month: <?="$ ".number_format($avgRevPerOrderMo
         <input type="text" name="compensation" id="compensation"></label>
     </div>
 
-    <div><label for="dob">Date of Birth (MM/DD/YYYY):
+    <div><label for="dob">Date of Birth (YYYY/MM/DD):
         <input type="text" name="dob" id="dob"></label>
     </div>
 
@@ -273,7 +286,7 @@ Average Revenue per Order current Month: <?="$ ".number_format($avgRevPerOrderMo
             <?php } ?>
         </select><br>
     </div>
-    <div><label for="pass">Last Name:
+    <div><label for="pass">Password:
         <input type="text" name="pass" id="pass"></label>
     </div>
 
