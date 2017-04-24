@@ -13,56 +13,48 @@ echo date('Y/m/d')."<br>";
 if(isset($_POST['quantity'])){
     try{
         $pdo->beginTransaction();
-    // var_dump($_POST);
-    // echo "<br> Testing <br>";
+        $sql = "INSERT INTO fruityco.order SET
+            PayID = :payid,
+            UserID = :userid,
+            order.Date = :datedate";
+        $s = $pdo->prepare($sql);
+        $s->bindValue(':payid', $_POST['paymentid']);
+        $s->bindValue(':userid', $_POST['userid']);
+        $s->bindValue(':datedate', date('Y/m/d'));
+        $s->execute();
+        
+        $sql = "SELECT OrderID FROM fruityco.order WHERE
+            PayID = :payid AND
+            UserID = :userid AND
+            order.Date = :datedate";
+        $s = $pdo->prepare($sql);
+        $s->bindValue(':payid', $_POST['paymentid']);
+        $s->bindValue(':userid', $_POST['userid']);
+        $s->bindValue(':datedate', date('Y/m/d'));
+        $s->execute();
 
-    $sql = "INSERT INTO fruityco.order SET
-        PayID = :payid,
-        UserID = :userid,
-        order.Date = :datedate";
-    $s = $pdo->prepare($sql);
-    $s->bindValue(':payid', $_POST['paymentid']);
-    $s->bindValue(':userid', $_POST['userid']);
-    $s->bindValue(':datedate', date('Y/m/d'));
-    $s->execute();
+        $orderid = $s->fetch();
+        $orderid = $orderid[0];
 
-    // echo "<br>Order Created<br>";
+        $quantity = $_POST['quantity'];
 
-    $sql = "SELECT OrderID FROM fruityco.order WHERE
-        PayID = :payid AND
-        UserID = :userid AND
-        order.Date = :datedate";
-    $s = $pdo->prepare($sql);
-    $s->bindValue(':payid', $_POST['paymentid']);
-    $s->bindValue(':userid', $_POST['userid']);
-    $s->bindValue(':datedate', date('Y/m/d'));
-    $s->execute();
-
-    $orderid = $s->fetch();
-    $orderid = $orderid[0];
-
-    $quantity = $_POST['quantity'];
-
-    $sql = "INSERT INTO orderline SET 
-    ProductID = :prodid,
-    OrderID = :orderid,
-    Quantity = :quantity";
-    // echo $sql;
-    $s = $pdo->prepare($sql);
-    $s->bindValue(':prodid', $productId);
-    $s->bindValue(':orderid', $orderid);
-    $s->bindValue(':quantity', $quantity);
-    $s->execute();
-    $pdo->commit();
+        $sql = "INSERT INTO orderline SET 
+        ProductID = :prodid,
+        OrderID = :orderid,
+        Quantity = :quantity";
+        $s = $pdo->prepare($sql);
+        $s->bindValue(':prodid', $productId);
+        $s->bindValue(':orderid', $orderid);
+        $s->bindValue(':quantity', $quantity);
+        $s->execute();
+        $pdo->commit();
     } catch (PDOException $e){
         $pdo->rollBack();
         die($e->getMessage()."<br>The transaction failed to commit and has been rolled back!");
     }
-
     echo "Product Purchased!";
     include "index.php";
     quit();
-
 }
 
 
