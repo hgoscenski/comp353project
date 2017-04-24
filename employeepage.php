@@ -73,9 +73,11 @@ if(isset($_POST['viewcustwithoutorder'])){
     $noOrders = $pdo->query("SELECT LName,fName FROM user WHERE NOT EXISTS
         (SELECT UserID FROM fruityco.order WHERE user.UserID = fruityco.order.UserID)");
     $noOrders = $noOrders->fetchAll();
-    var_dump($noOrders);
-    // Need to make this return a table
-    // This is a subquery though!
+    echo "These users have not placed any orders: <br>";
+    foreach($noOrders as $no){
+        echo $no['fName']." ".$no['LName'];
+        echo "<br>";
+    }
 }
 
 if(isset($_POST['year']) and isset($_POST['month'])){
