@@ -22,6 +22,10 @@ if(isset($_POST['newpass']) and isset($_POST['empid'])){
     echo "Employee ".$_POST['empid']."'s password has been updated.";
 }
 
+if(isset($_POST['termEmp'])){
+    // implement termination
+}
+
 if(isset($_POST['fname']) and isset($_POST['ssn'])){
     $sql = "INSERT INTO employee SET 
     DepartmentID = :dept,

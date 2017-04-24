@@ -7,7 +7,7 @@
 <?php
 
 $userName = $_POST['username'];
-echo $userName;
+// echo $userName;
 include_once 'db.inc.php';
 try{
 //    echo $_GET['username']."   ".$_GET['password'];
@@ -26,7 +26,7 @@ try{
 //    echo $hashedPassword."     ".$userid;
 
     $providedPassword = $_POST['password'];
-    echo $providedPassword;
+    // echo $providedPassword;
 
 //    echo "    ".$providedPassword;
 
@@ -36,7 +36,7 @@ try{
             $userid=$_GET['userid'];
         }
 
-        echo 'first things first';
+        // echo 'first things first';
 
         $query = $pdo->query('SELECT fName FROM user WHERE UserID='.$userid);
         $userInfo = $query->fetchAll();
@@ -60,7 +60,7 @@ try{
         </form>
         <form action="viewRepairs.php" method="get">
             <input type="hidden" name="userid" value="<?=$userid?>">
-            <input type="submit" value="See Requested Repairs">
+            <input type="submit" value="Request Repairs/Track Repairs">
         </form>
         <form action="setPayment.php" method="get">
             <input type="hidden" name="userid" value="<?=$userid?>">
