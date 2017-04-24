@@ -52,13 +52,10 @@ if(isset($_POST['fname']) and isset($_POST['ssn'])){
 
 }
 
-if(isset($_POST['viewaboveavgsalary'])){
-    // display those with above average salaries per department
-}
-
 if(isset($_POST['viewcustwithoutorder'])){
     // 
-    $noOrders = $pdo->query("SELECT LName,fName FROM user WHERE NOT EXISTS(SELECT UserID FROM fruityco.order WHERE user.UserID = fruityco.order.UserID)");
+    $noOrders = $pdo->query("SELECT LName,fName FROM user WHERE NOT EXISTS
+        (SELECT UserID FROM fruityco.order WHERE user.UserID = fruityco.order.UserID)");
     $noOrders = $noOrders->fetchAll();
     var_dump($noOrders);
     // Need to make this return a table
@@ -66,11 +63,24 @@ if(isset($_POST['viewcustwithoutorder'])){
 }
 
 if(isset($_POST['year']) and isset($_POST['month'])){
-    // display sales by year/month
+    // viewing sales by month
+    $year = $_POST['year'];
+    $month = $_POST['month'];
+    $sql = "SELECT SUM(Price) FROM product P JOIN orderline O ON P.ProductID = O.ProductID
+            JOIN fruityco.order O2 ON O2.OrderID = O.OrderID
+            WHERE MONTH(Date) = :month AND YEAR(Date) = :year";
+    $s = $pdo->prepare($sql);
+    $s->bindValue(':year', $year);
+    $s->bindValue(':month', $month);
+    $s->execute();
+    $results = $s->fetch();
+
+    echo "Sales for ".$month."/".$year." were $".number_format($results[0],2); 
 }
 
 if(isset($_POST['productsalesview'])){
-    $sql = "SELECT COUNT(*) FROM orderline O JOIN product P ON P.ProductID = O.ProductID WHERE P.ProductDesc = :proddesc";
+    $sql = "SELECT COUNT(*) FROM orderline O JOIN product P ON P.ProductID = O.ProductID 
+            WHERE P.ProductDesc = :proddesc";
     $s = $pdo->prepare($sql);
     $s->bindValue(':proddesc', $_POST['productsalesview']);
     $s->execute();
@@ -90,25 +100,29 @@ if(isset($_POST['deleteuser'])){
     echo "User " . $_POST['deleteuser'] . " has been deleted.";
 }
 
-$employeeArray = $pdo->query("SELECT EmployeeID FROM employee");
+// Used to generate dropdown for employee password set
+$employeeArray = $pdo->query("SELECT EmployeeID FROM employee WHERE EmployeeStatus <> 'TRM'");
 $employeeArray = $employeeArray->fetchAll();
 foreach($employeeArray as $indarray){
     $employeeIdList[] = $indarray[0];
 }
 $empcopylist = $employeeIdList;
 
+// Used to generate dropdown for user deletion
 $userarray = $pdo->query("SELECT UserID FROM user");
 $userarray = $userarray->fetchAll();
 foreach($userarray as $indarray){
     $userlist[] = $indarray[0];
 }
 
+// Used to generate dropdown for product sales view
 $productarray = $pdo->query("SELECT ProductDesc FROM product");
 $productarray = $productarray->fetchAll();
 foreach($productarray as $indarray){
     $productlist[] = $indarray[0];
 }
 
+// used to generate the dropdown for the employee creation dialogue
 $deptarray = $pdo->query("SELECT DepartmentID,DepartmentDesc FROM department");
 $deptarray = $deptarray->fetchAll();
 foreach($deptarray as $indarray){
@@ -119,7 +133,8 @@ $numOrderMonth = $pdo->query("SELECT count(*) FROM fruityco.order WHERE MONTH(Da
 $numOrderMonth = $numOrderMonth->fetch();
 $numOrderMonth = $numOrderMonth[0];
 
-$totalRevPerMonth = $pdo->query("SELECT SUM(Price) FROM product P JOIN orderline O ON P.ProductID = O.ProductID WHERE EXISTS (SELECT * FROM fruityco.order WHERE MONTH(Date) = MONTH(now()))");
+$totalRevPerMonth = $pdo->query("SELECT SUM(Price) FROM product P JOIN orderline O ON P.ProductID = O.ProductID
+                                    WHERE EXISTS (SELECT * FROM fruityco.order WHERE MONTH(Date) = MONTH(now()))");
 $totalRevPerMonth = $totalRevPerMonth->fetch();
 $totalRevPerMonth = $totalRevPerMonth[0];
 
@@ -145,25 +160,36 @@ Average Revenue per Order current Month: <?="$ ".number_format($avgRevPerOrderMo
                 <?php } ?>
             </select>
         </label><br>
-        <label for="newpass">New Password<input type="text" name="newpass"></label><br>
+        <label for="newpass">New Password<input type="text" name="newpass" required></label><br>
         <input type="submit" value="Change employee password"><br>
+    </form>
+
+<h2>Terminate Employee</h2>
+    <form action="employeepage.php" method="post">
+        <label for="termEmp">Employee ID<select name="termEmp">
+                <?php foreach($employeeIdList as $emp){ ?>
+                    <option value="<?=$emp?>"> <?=$emp?> </option>
+                <?php } ?>
+            </select>
+        </label><br>
+        <input type="submit" value="Terminate Employee"><br>
     </form>
 
 <h2>View Sales by month</h2>
     <form action="employeepage.php" method="post">
         <label for="month">Month<select name="month">
-            <option value="January"> January </option>
-            <option value="February"> February </option>
-            <option value="March"> March> </option>
-            <option value="April">April </option>
-            <option value="May"> May </option>
-            <option value="June"> June </option>
-            <option value="July"> July </option>
-            <option value="August"> August </option>
-            <option value="September"> September </option>
-            <option value="October"> October </option>
-            <option value="November"> November </option>
-            <option value="December">December </option>
+            <option value="01"> January </option>
+            <option value="02"> February </option>
+            <option value="03"> March> </option>
+            <option value="04"> April </option>
+            <option value="05"> May </option>
+            <option value="06"> June </option>
+            <option value="07"> July </option>
+            <option value="08"> August </option>
+            <option value="09"> September </option>
+            <option value="10"> October </option>
+            <option value="11"> November </option>
+            <option value="12"> December </option>
             </select>
             </label><br>
         <label for="year">Year<select name="year">
@@ -196,11 +222,11 @@ Average Revenue per Order current Month: <?="$ ".number_format($avgRevPerOrderMo
         <input type="submit" value="View Sales">
     </form>
 
-<h2>View Employee Salaries Above Average For Department</h2>
+<!--<h2>View Employee Salaries Above Average For Department</h2>
     <form action="employeepage.php" method="post">
         <input type="hidden" name="viewaboveavgsalary" value="true">
         <input type="submit" value="View Results">
-    </form>
+    </form>-->
 
 <h2>View Customers without Orders</h2>
     <form action="employeepage.php" method="post">
